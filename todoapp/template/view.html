@@ -1,0 +1,36 @@
+{% extends 'home.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="card">
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <th>sl No.</th>
+            <th>Task Name</th>
+            <th>Task Description</th>
+            <th>Task Priority</th>
+            <th>Task date</th>
+            <th>Edit</th>
+            <th>Delete</th>
+            </thead>
+            {% for i in data %}
+            <tbody>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.name}}</td>
+            <td>{{i.description}}</td>
+            <td>{{i.priority}}</td>
+            <td>{{i.date}}</td>
+            <td><a class="btn btn-success" href="{% url 'edit' i.id %}">Edit</a></td>
+            <td>
+                <form action="{% url 'delete' i.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+            </tbody>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}
